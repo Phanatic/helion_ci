@@ -1,0 +1,18 @@
+{
+  "name": "express-app",
+  "version": "1.0.0",
+
+  "dependencies": {
+    "klass":  "1.x.x",
+    "underscore": "1.x.x",
+    "vows": "0.x.x",
+    "cluster": "0.x.x",
+    "express": "2.x.x",
+    "ejs": "0.x.x",
+    "oauth": "0.9.x",
+    "passport-github" : "x",
+    "passport" : "x",
+    "github" : "x",
+    "request" : "x"
+  }
+}
