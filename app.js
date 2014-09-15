@@ -20,6 +20,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
+  app.use(express.session({secret: '1234567890QWERTY'}));
   app.use(express.static(__dirname + '/public'));
   app.use(passport.initialize());
   app.use(passport.session());
@@ -78,7 +79,15 @@ passport.use(new GitHubStrategy({
     callbackURL: "http://127.0.0.1:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    addWebHook(accessToken, profile, done);
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
+
+      // To keep the example simple, the user's GitHub profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the GitHub account with a user record in your database,
+      // and return that user instead.
+      return done(null, { token : accessToken, profile :  profile });
+    });
   }
 ));
 
@@ -100,9 +109,9 @@ app.get('/auth/github',
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback',
-  passport.authenticate('github', {failureRedirect: '/login' }),
+  passport.authenticate('github', {failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/github/addwebhook');
+    res.redirect('/github/repos');
   });
 
 if (!module.parent) {

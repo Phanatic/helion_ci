@@ -1,0 +1,11 @@
+<h1> Pick a repo to helionize</h1>
+
+<div class="row" style="height:250px">
+  <% repos.forEach(function(repo){ %>
+    <div class= "col-md-3">
+      <h2> <%=repo.name%> </h2>
+      <p> <%=repo.description%> </p>
+      <p><a class="btn btn-primary" href="#" role="button">Sign up&raquo;</a></p>
+    </div>
+  <% }) %>
+</div>

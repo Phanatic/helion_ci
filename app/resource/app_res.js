@@ -7,6 +7,11 @@ var AppRes = module.exports = BaseRes.extend({
   },
 
   all: function (req, res) {
-    res.render('app/index');
+    if (req.isAuthenticated()) {
+      res.redirect('/github/repos');
+    }
+    else {
+        res.render('app/signup');
+    }
   }
 });

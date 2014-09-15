@@ -8,6 +8,8 @@
 
   <link rel="stylesheet" href="/css/app.css" type="text/css" />
 
+  <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="/css/bootstrap-theme.min.css" type="text/css" />
   <!--[if lt IE 9]>
   <script type="text/javascript">
   (function(){if(!/*@cc_on!@*/0)return;var e="abbr,article,aside,audio,bb,canvas,datagrid,datalist,details,dialog,eventsource,figure,footer,header,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=0,length=e.length;while(i<length){document.createElement(e[i++])}})();
@@ -15,8 +17,11 @@
   <![endif]-->
 </head>
 <body>
-  <%- body %>
-
+  <div class="center-block container" style="float:none">
+    <%- body %>
+  </div>
   <script type="text/javascript" src="/js/app.js"></script>
+  <script type="text/javascript" src="/js/jquery.2.1.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 </body>
 </html>
