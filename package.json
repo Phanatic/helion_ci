@@ -13,6 +13,7 @@
     "passport-github" : "x",
     "passport" : "x",
     "github" : "x",
-    "request" : "x"
+    "request" : "x",
+    "mysql" : "x"
   }
 }

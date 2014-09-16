@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1>My Repos</h1>
+</div>
+<div class="col-md-6">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Description </th>
+      <th> Last Build </th>
+      <th> Builds </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% repos.forEach(function(repo){ %>
+    <tr>
+      <td> <%=repo.name%> </td>
+      <td> <%=repo.description%> </td>
+      <td> <%if (repo.lastbuildfailed) {%>
+            <span class="label label-danger">Failed</span>
+           <%} else {%>
+             <span class="label label-success">Succeeded</span>
+           <%}%>
+           </td>
+      <td> <a href="/repos/builds?repoId=<%=repo.id%>"><span class="badge pull-right"><%=repo.builds.length%></span>View Builds</a></td>
+    </tr>
+  <% }) %>
+</tbody>
+</div>

@@ -8,7 +8,8 @@ var fs = require('fs')
   , GitHubStrategy = require('passport-github').Strategy
   , GITHUB_CLIENT_ID = "258704db5e0a41019729"
   , GITHUB_CLIENT_SECRET = "a0e1d15b31367ff445e7c1265d6c1018de41d37e"
-  , HelionCI = require('./app/sdk/helionci');
+  , HelionCI = require('./app/sdk/helionci')
+  , UserStore = require('./app/sdk/userstore');
 
 // Config
 app.set('views', __dirname + '/app/views');
@@ -81,7 +82,6 @@ passport.use(new GitHubStrategy({
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-
       // To keep the example simple, the user's GitHub profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the GitHub account with a user record in your database,
@@ -116,7 +116,12 @@ app.get('/auth/github/callback',
 
 if (!module.parent) {
   app.listen(PORT);
+
+  var store = new UserStore();
+  store.createOrUpdateUser({ token : '', profile :  { id :123456 , name :'phani' } },
+  function(){});
   console.log('App started on port: ' + PORT);
+
 }
 
 module.exports = app;
