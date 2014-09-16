@@ -10,18 +10,23 @@ var GithubRes = module.exports = klass(function () {
   route: function (app) {
     app.post('/github/webhook', _.bind(this.recievewebhook, this));
     app.get('/github/repos', this.ensureAuthenticated, _.bind(this.showrepos, this));
+    app.get('/github/reposignup', this.ensureAuthenticated, _.bind(this.signuprepo, this));
   },
 
   recievewebhook: function(req, res) {
     res.render('app/index');
   },
 
-  showrepos: function(req,res) {
+  showrepos: function (req, res) {
       var helion = new HelionCI();
       helion.getRepos(req.user.token, req.user.profile.username, function(error, repos) {
           debugger;
           res.render('app/repos' , {repos : repos});
       });
+  },
+
+  signuprepo: function (req, res) {
+    res.render('app/reposignup' , { repoName : req.query.repo, hookUrl : req.query.hookUrl});
   },
 
   // Simple route middleware to ensure user is authenticated.

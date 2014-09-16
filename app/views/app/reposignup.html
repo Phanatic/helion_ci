@@ -1,0 +1,48 @@
+<div class="row">
+  <h2> <%=repoName%> </h2>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <input type="button"
+    value="Add web hook"
+    id="addwebhook"
+    name="addwebhook"
+    onclick="addWebHook"
+    class="btn btn-primary"/>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+<form method="POST" class="form-horizontal" action="/authenticate">
+       <fieldset>
+         <div class="form-group">
+           <h3>HP Helion ALS credentials</h3>
+         </div>
+          <div class="form-group">
+             <div class="col-lg-8 col-lg-offset-3">
+             </div>
+          </div>
+          <div class="form-group">
+             <label for="inputUri" class="control-label">HP Helion Uri</label>
+             <input type="text" class="form-control" id="inputUri" name="serverUri" placeholder="HP Helion Uri">
+          </div>
+          <div class="form-group">
+             <label for="inputEmail" class="control-label">Username</label>
+             <input type="text" class="form-control" name="userName" id="inputUserName" placeholder="Username">
+          </div>
+          <div class="form-group">
+             <label for="inputPassword" class="control-label">Password</label>
+             <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
+          </div>
+          <div class="form-group">
+             <button type="submit" id="btnLogin" class="btn btn-primary">Login</button>
+          </div>
+       </fieldset>
+
+       <input type="hidden" value="<%= hookUrl %>" name="repoUrl" id="repoUrl"/>
+    </form>
+
+  </div>
+    </div>
+<input type="hidden" value="<%=hookUrl%>" name="hookUrl" />
