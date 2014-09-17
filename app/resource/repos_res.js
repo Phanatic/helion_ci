@@ -4,9 +4,9 @@ var BaseRes = require('./base_res')
 
 var ReposRes = module.exports = BaseRes.extend({
   route: function (app) {
-    app.get('/repos', _.bind(this.all, this));
-    app.get('/repo', _.bind(this.getRepo, this));
-    app.get('/github/reposignup', _.bind(this.signuprepo, this));
+    app.get('/repos', this.ensureAuthenticated, _.bind(this.all, this));
+    app.get('/repo', this.ensureAuthenticated, _.bind(this.getRepo, this));
+    app.get('/github/reposignup', this.ensureAuthenticated, _.bind(this.signuprepo, this));
   },
 
   all: function (req, res) {
@@ -29,5 +29,11 @@ var ReposRes = module.exports = BaseRes.extend({
     store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url}, function(repo, err) {
       res.render('app/reposignup' , { repo: repo});
     });
+  },
+
+  ensureAuthenticated : function(req, res, next) {
+    if (req.isAuthenticated()) { return next();
+    }
+    res.redirect('/signup')
   }
 });
