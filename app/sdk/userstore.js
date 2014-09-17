@@ -1,4 +1,5 @@
-var klass = require('klass');
+var klass = require('klass')
+  , _ = require('underscore');
 
 var UserStore = module.exports = klass(function () {
   // constructor
@@ -23,7 +24,7 @@ var UserStore = module.exports = klass(function () {
   },
 
   createOrUpdateUser: function(user, done) {
-    
+
     done(null, { id : 1, name : user.profile.name ,
        githubUserId : user.profile.id});
   },
@@ -35,5 +36,11 @@ var UserStore = module.exports = klass(function () {
 
   getReposForUser : function (user, done) {
     done(user, this.repos);
+  },
+
+  getRepo : function(repoId, done) {
+    var storedRepo = _.find(this.repos, function(repo){ return repo.id === repoId });
+    debugger;
+    done(storedRepo)
   }
 });

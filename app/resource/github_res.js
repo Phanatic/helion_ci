@@ -15,12 +15,12 @@ var GithubRes = module.exports = klass(function () {
   },
 
   recievewebhook: function(req, res) {
+    console.log(req.body);
     res.render('app/index');
   },
 
   addwebhook: function(req, res) {
-    var helion = new HelionCI();
-    helion.addWebHook(req.user.token, req.user.profile.username,
+    this.helion().addWebHook(req.user.token, req.user.profile.username,
       req.body.repoName, function (err, hook) {
         if(err) {
           res.json(err);
@@ -32,9 +32,7 @@ var GithubRes = module.exports = klass(function () {
   },
 
   showrepos: function (req, res) {
-      var helion = new HelionCI();
-      helion.getRepos(req.user.token, req.user.profile.username, function(error, repos) {
-
+      this.helion().getRepos(req.user.token, req.user.profile.username, function(error, repos) {
           res.render('app/repos' , {repos : repos});
       });
   },
@@ -43,13 +41,14 @@ var GithubRes = module.exports = klass(function () {
     res.render('app/reposignup' , { repoName : req.query.repo});
   },
 
-  // Simple route middleware to ensure user is authenticated.
-  //   Use this route middleware on any resource that needs to be protected.  If
-  //   the request is authenticated (typically via a persistent login session),
-  //   the request will proceed.  Otherwise, the user will be redirected to the
-  //   login page.
   ensureAuthenticated : function(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
     res.redirect('/signup')
+  },
+
+  helion : function () {
+    var helion = new HelionCI();
+    return helion;
+
   }
 });

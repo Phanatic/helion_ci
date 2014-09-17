@@ -5,15 +5,16 @@ var MySqlStore = module.exports = klass(function () {
   this.connection =  mysql.createConnection({
     host : 'localhost',
     port : 3306,
-    user : 'helionci',
-    database: 'users'
+    user : 'cisystem',
+    password: 'fairgate'
   });
   // constructor
 }).methods({
   // public methods
   connectToStore : function (done) {
+    var self = this;
     this.connection.connect(function(err){
-      done(err, this);
+      self.runQuery("use Users", done);
     });
   },
 
@@ -29,7 +30,9 @@ var MySqlStore = module.exports = klass(function () {
     });
   },
 
-  runQuery : function(queryText, parameters, done) {
-
+  runQuery : function(queryText, done) {
+    this.connection.query(queryText, function(err,result) {
+      done(err, result);
+    });
   }
 });

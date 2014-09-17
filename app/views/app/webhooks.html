@@ -5,16 +5,16 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th> Name </th>
-      <th> Description </th>
-      <th> Last Build </th>
+      <th> Triggered </th>
+      <th> Author </th>
+      <th> Commit </th>
       <th> Builds </th>
     </tr>
   </thead>
   <tbody>
   <% repos.forEach(function(repo){ %>
     <tr>
-      <td> <a href ="/repo?id=<%= repo.id%>"> <%=repo.name%> </a> </td>
+      <td> <%=repo.name%> </td>
       <td> <%=repo.description%> </td>
       <td> <%if (repo.lastbuildfailed) {%>
             <span class="label label-danger">Failed</span>
@@ -22,7 +22,7 @@
              <span class="label label-success">Succeeded</span>
            <%}%>
            </td>
-      <td> <a href="/repos/builds?repoId=<%=repo.id%>"><span class="badge pull-right"><%=repo.builds.length%></span>Builds</a></td>
+      <td> <a href="/repos/builds?repoId=<%=repo.id%>"><span class="badge pull-right"><%=repo.builds.length%></span>View Builds</a></td>
     </tr>
   <% }) %>
 </tbody>
