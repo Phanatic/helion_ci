@@ -65,11 +65,6 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-function addWebHook(userToken, user, done) {
-  var helionClient = new HelionCI();
-  helionClient.addWebHook(userToken, user, done);
-}
-
 // Use the GitHubStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and GitHub

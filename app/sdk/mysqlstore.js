@@ -19,14 +19,13 @@ var MySqlStore = module.exports = klass(function () {
 
   callFunction : function(functionName, parameters, done) {
     this.connection.query(" call functionName ("+ parameters.serialize() +"')", function(err,result) {
-      debugger;
     });
   },
 
   callStoredProcedude : function(procedureName, parameters, done) {
     this.connection.query(" call CreateorUpdateUser ("+ user.profile.id
     +", '"+ user.profile.name +"')", function(err,result) {
-      debugger;
+
     });
   },
 

@@ -6,10 +6,10 @@ var Helion = module.exports = klass(function () {
   // constructor
 }).methods({
   // public methods
-  addWebHook : function(token, user, done) {
+  addWebHook : function(token, userName, repoName, done) {
     var webHook = {
-          "user" : "Phanatic",
-          "repo" : "OData4Excel2007",
+          "user" : userName,
+          "repo" : repoName,
           "name": "web",
           "active": true,
           "events": [
@@ -22,15 +22,13 @@ var Helion = module.exports = klass(function () {
           }
         }
     console.log(token);
-    console.log(user);
+    console.log(webHook);
 
-    var gitClient =  this.getGitClient();
+    var gitClient =  this.getGitClient(token);
 
     console.log('adding web hook to repo');
-    gitClient.repos.createHook(webHook, function(one,two,three) {
-        debugger;
-        console.log(one.message);
-        done();
+    gitClient.repos.createHook(webHook, function(err, hook) {
+        done(err, hook);
       });
   },
 
@@ -44,8 +42,7 @@ var Helion = module.exports = klass(function () {
         "version": "3.0.0",
         "protocol": "https",
         "host": "api.github.com",
-        "port": 443,});
-
+        "port": 443});
       gitClient.authenticate({
         type: "oauth",
         token: token

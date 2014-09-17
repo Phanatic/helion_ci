@@ -23,7 +23,7 @@ var UserStore = module.exports = klass(function () {
   },
 
   createOrUpdateUser: function(user, done) {
-    debugger;
+    
     done(null, { id : 1, name : user.profile.name ,
        githubUserId : user.profile.id});
   },

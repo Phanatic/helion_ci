@@ -1,0 +1,5 @@
+applications:
+- name: HelionCI
+  mem: 400M
+  instances: 1
+  ignores: ["node_modules", ".git"]

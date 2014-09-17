@@ -1,48 +1,91 @@
 <div class="row">
-  <h2> <%=repoName%> </h2>
+  <h2 id="repoName" name="repoName"><%=repoName%></h2>
 </div>
 
 <div class="row">
   <div class="col-md-6">
-    <input type="button"
-    value="Add web hook"
-    id="addwebhook"
-    name="addwebhook"
-    onclick="addWebHook"
-    class="btn btn-primary"/>
+
   </div>
 </div>
-<div class="row">
-  <div class="col-md-6">
-<form method="POST" class="form-horizontal" action="/authenticate">
-       <fieldset>
-         <div class="form-group">
-           <h3>HP Helion ALS credentials</h3>
-         </div>
-          <div class="form-group">
-             <div class="col-lg-8 col-lg-offset-3">
-             </div>
-          </div>
-          <div class="form-group">
-             <label for="inputUri" class="control-label">HP Helion Uri</label>
-             <input type="text" class="form-control" id="inputUri" name="serverUri" placeholder="HP Helion Uri">
-          </div>
-          <div class="form-group">
-             <label for="inputEmail" class="control-label">Username</label>
-             <input type="text" class="form-control" name="userName" id="inputUserName" placeholder="Username">
-          </div>
-          <div class="form-group">
-             <label for="inputPassword" class="control-label">Password</label>
-             <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
-          </div>
-          <div class="form-group">
-             <button type="submit" id="btnLogin" class="btn btn-primary">Login</button>
-          </div>
-       </fieldset>
+<ul id="myTab" class="nav nav-tabs">
+   <li class="active">
+      <a href="#home" data-toggle="tab">
+         Github setup
+      </a>
+   </li>
+   <li class="dropdown">
+      <a href="#" id="myTabDrop1" class="dropdown-toggle"
+         data-toggle="dropdown">Post Build
+         <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+         <li><a href="#jmeter" tabindex="-1" data-toggle="tab">Deploy to HP Helion ALS</a></li>
+         <li><a href="#comingsoon" tabindex="-1" data-toggle="tab">Deploy to Google Cloud Engine</a></li>
+         <li><a href="#comingsoon" tabindex="-1" data-toggle="tab">Deploy to Cloud Foundry</a></li>
+      </ul>
+   </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+   <div class="tab-pane active" id="home">
+      <div class="container">
+        <div class="col-md-2">
+          <input type="button"
+          value="Add web hook"
+          id="addwebhook"
+          name="addwebhook"
+          onclick="addWebHook"
+          class="btn btn-primary"/>
+        </div>
+      </div>
+   </div>
+   <div class="tab-pane" id="ios">
+      <p>iOS is a mobile operating system developed and distributed by Apple
+         Inc. Originally released in 2007 for the iPhone, iPod Touch, and
+         Apple TV. iOS is derived from OS X, with which it shares the
+         Darwin foundation. iOS is Apple's mobile version of the
+         OS X operating system used on Apple computers.</p>
+   </div>
+   <div class="tab-pane  col-sm-offset-1" id="jmeter">
+        <div class="col-md-6">
+          <form method="POST" class="form-horizontal" action="/authenticate">
+             <fieldset>
+               <header>
+                 <h4>Deploy to HP Helion ALS</h4>
+               </header>
+                <div class="form-group">
+                   <div class="col-lg-8">
+                   </div>
+                </div>
+                <div class="form-group">
+                   <label for="inputUri" class="control-label">HP Helion Uri</label>
+                   <input type="text" class="form-control" id="inputUri" name="serverUri" placeholder="HP Helion Uri">
+                </div>
+                <div class="form-group">
+                   <label for="inputEmail" class="control-label">Username</label>
+                   <input type="text" class="form-control" name="userName" id="inputUserName" placeholder="Username">
+                </div>
+                <div class="form-group">
+                   <label for="inputPassword" class="control-label">Password</label>
+                   <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
+                </div>
+                <div class="form-group">
+                   <button type="submit" id="btnLogin" class="btn btn-primary">Login</button>
+                </div>
+             </fieldset>
+          </form>
+        </div>
+   </div>
+   <div class="tab-pane" id="comingsoon">
+      <p>
+        <h3>Coming Soon!</h3>
+      </p>
+   </div>
+</div>
 
-       <input type="hidden" value="<%= hookUrl %>" name="repoUrl" id="repoUrl"/>
-    </form>
 
-  </div>
-    </div>
-<input type="hidden" value="<%=hookUrl%>" name="hookUrl" />
+<script type="text/javascript">
+  $('#myTab a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
