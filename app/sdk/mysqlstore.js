@@ -39,7 +39,6 @@ var MySqlStore = module.exports = klass(function () {
   callStoredProcedude : function(procedureName, done) {
     this.connection.query(" call "+procedureName, function(err,results) {
         var sanitized = results;
-        console.dir(results);
         if(!err) {
           sanitized = results[0]
         }

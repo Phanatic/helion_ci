@@ -1,11 +1,23 @@
-<h1> Pick a repo to helionize</h1>
-
-<div class="row" style="height:250px">
+<div class="page-header">
+  <h1>Pick a repo to helionize</h1>
+</div>
+<div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Description </th>
+    </tr>
+  </thead>
+  <tbody>
   <% repos.forEach(function(repo){ %>
-    <div class= "col-md-3">
-      <h2> <%=repo.name%> </h2>
-      <p> <%=repo.description%> </p>
-      <p><a class="btn btn-primary" href="/github/reposignup?repo=<%=repo.name%>&url=<%=repo.url%>" role="button">Sign up&raquo;</a></p>
-    </div>
+    <tr>
+      <td> <a href ="<%=repo.html_url%>" target="_blank"> <%=repo.name%> </a> </td>
+      <td> <%=repo.description%> </td>
+      <td>
+        <a class="btn btn-primary" href="/github/reposignup?repo=<%=repo.name%>&url=<%=repo.html_url%>" role="button">Sign up&raquo;</a>
+      </td>
+    </tr>
   <% }) %>
+</tbody>
 </div>

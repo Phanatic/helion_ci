@@ -2,7 +2,8 @@ var klass = require('klass')
   , BaseRes = require('./base_res')
   , _ = require('underscore')
   , github = require('github')
-  , HelionCI = require('../sdk/helionci');
+  , HelionCI = require('../sdk/helionci')
+  , UserStore = require('../sdk/userstore');
 
 var GithubRes = module.exports = klass(function () {
   // constructor
@@ -30,9 +31,18 @@ var GithubRes = module.exports = klass(function () {
   },
 
   showrepos: function (req, res) {
-      this.helion().getRepos(req.user.token, req.user.profile.username, function(error, repos) {
-          console.log(repos);
-          res.render('app/repos' , {repos : repos});
+      this.helion().getRepos(req.user.token, req.user.profile.username, function(error, gitRepos) {
+          var store = new UserStore();
+          store.getReposForUser(req.user, function (user, enlistedRepos){
+            var repos = _.reject(gitRepos, function(gitRepo) {
+              return _.any(enlistedRepos, function (repo){
+                console.log( gitRepo.html_url + " === "+ repo.repoUrl + " : "+ (gitRepo.html_url === repo.repoUrl) );
+                return gitRepo.html_url === repo.repoUrl;
+              })
+            });
+
+            res.render('app/repos' , {repos : repos});
+          });
       });
   },
 
