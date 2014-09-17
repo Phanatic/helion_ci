@@ -78,7 +78,6 @@ passport.use(new GitHubStrategy({
     var store = new UserStore();
     store.createOrUpdateUser(profile, function(dbUser, err) {
       var context = { db : dbUser, token : accessToken, profile :  profile };
-      console.log(context);
       return done(null, context);
     });
   }

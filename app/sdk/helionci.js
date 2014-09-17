@@ -21,12 +21,7 @@ var Helion = module.exports = klass(function () {
             "content_type": "json"
           }
         }
-    console.log(token);
-    console.log(webHook);
-
     var gitClient =  this.getGitClient(token);
-
-    console.log('adding web hook to repo');
     gitClient.repos.createHook(webHook, function(err, hook) {
         done(err, hook);
       });

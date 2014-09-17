@@ -11,11 +11,9 @@ var GithubRes = module.exports = klass(function () {
     app.post('/github/addwebhook', _.bind(this.addwebhook, this));
     app.post('/github/webhook', _.bind(this.recievewebhook, this));
     app.get('/github/repos', this.ensureAuthenticated, _.bind(this.showrepos, this));
-    app.get('/github/reposignup', this.ensureAuthenticated, _.bind(this.signuprepo, this));
   },
 
   recievewebhook: function(req, res) {
-    console.log(req.body);
     res.render('app/index');
   },
 
@@ -33,12 +31,9 @@ var GithubRes = module.exports = klass(function () {
 
   showrepos: function (req, res) {
       this.helion().getRepos(req.user.token, req.user.profile.username, function(error, repos) {
+          console.log(repos);
           res.render('app/repos' , {repos : repos});
       });
-  },
-
-  signuprepo: function (req, res) {
-    res.render('app/reposignup' , { repoName : req.query.repo});
   },
 
   ensureAuthenticated : function(req, res, next) {
@@ -49,6 +44,5 @@ var GithubRes = module.exports = klass(function () {
   helion : function () {
     var helion = new HelionCI();
     return helion;
-
   }
 });
