@@ -1,5 +1,6 @@
 var klass = require('klass')
-  , _ = require('underscore');
+  , _ = require('underscore')
+  , mySqlStore = require('./mysqlstore');
 
 var UserStore = module.exports = klass(function () {
   // constructor
@@ -23,24 +24,40 @@ var UserStore = module.exports = klass(function () {
     return false;
   },
 
-  createOrUpdateUser: function(user, done) {
-
-    done(null, { id : 1, name : user.profile.name ,
-       githubUserId : user.profile.id});
+  createOrUpdateUser: function(profile, done) {
+    this.storeContext( function (context) {
+         context.callStoredProcedude("CreateOrUpdateUser ("+profile.id+" , '"+ profile.displayName+"')", function (err, results) {
+           debugger;
+           return done(results[0], err);
+         })
+       });
   },
 
   createRepoSignup: function(user, repo, done) {
     this.repos.push(repo);
-    done(user,repo);
+    return done(user,repo);
   },
 
   getReposForUser : function (user, done) {
-    done(user, this.repos);
+    this.storeContext( function (context) {
+      context.callStoredProcedude("GetUserRepos ("+user.db.id+")", function (err, results) {
+        debugger;
+        return done(user, results, err);
+      })
+    });
   },
 
   getRepo : function(repoId, done) {
     var storedRepo = _.find(this.repos, function(repo){ return repo.id === repoId });
-    debugger;
-    done(storedRepo)
+    return done(storedRepo)
+  },
+
+  storeContext: function(done) {
+    var sqlStore = new mySqlStore();
+    sqlStore.connectToStore(function(err,connection){
+      if(!err) {
+        return done(sqlStore);
+      }
+    })
   }
 });

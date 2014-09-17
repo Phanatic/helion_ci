@@ -20,7 +20,6 @@ var ReposRes = module.exports = BaseRes.extend({
       , repoId = parseInt(req.query.id, 10);
 
     store.getRepo(repoId, function(repo){
-      debugger;
       res.render('app/repo' , {repo : repo});
     });
   }

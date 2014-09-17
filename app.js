@@ -75,13 +75,11 @@ passport.use(new GitHubStrategy({
     callbackURL: "http://127.0.0.1:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      // To keep the example simple, the user's GitHub profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the GitHub account with a user record in your database,
-      // and return that user instead.
-      return done(null, { token : accessToken, profile :  profile });
+    var store = new UserStore();
+    store.createOrUpdateUser(profile, function(dbUser, err) {
+      var context = { db : dbUser, token : accessToken, profile :  profile };
+      console.log(context);
+      return done(null, context);
     });
   }
 ));
@@ -111,10 +109,6 @@ app.get('/auth/github/callback',
 
 if (!module.parent) {
   app.listen(PORT);
-
-  var store = new UserStore();
-  store.createOrUpdateUser({ token : '', profile :  { id :123456 , name :'phani' } },
-  function(){});
   console.log('App started on port: ' + PORT);
 
 }

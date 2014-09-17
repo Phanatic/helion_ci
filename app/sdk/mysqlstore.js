@@ -19,14 +19,32 @@ var MySqlStore = module.exports = klass(function () {
   },
 
   callFunction : function(functionName, parameters, done) {
-    this.connection.query(" call functionName ("+ parameters.serialize() +"')", function(err,result) {
+
+    this.runQuery(" Select "+functionName+" ("+ parameters +")", function(err,results) {
+      var sanitized = results;
+      if(!err) {
+        sanitized = results[0]
+        var resultPropName = '';
+        for(var prop in sanitized) {
+           resultPropName = prop;
+         }
+
+        sanitized = sanitized[resultPropName];
+      }
+
+      done(err, sanitized);
     });
   },
 
-  callStoredProcedude : function(procedureName, parameters, done) {
-    this.connection.query(" call CreateorUpdateUser ("+ user.profile.id
-    +", '"+ user.profile.name +"')", function(err,result) {
+  callStoredProcedude : function(procedureName, done) {
+    this.connection.query(" call "+procedureName, function(err,results) {
+        var sanitized = results;
+        console.dir(results);
+        if(!err) {
+          sanitized = results[0]
+        }
 
+        done(err, sanitized);
     });
   },
 
