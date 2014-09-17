@@ -19,8 +19,7 @@ var ReposRes = module.exports = BaseRes.extend({
   getRepo : function (req, res) {
     var store = new UserStore()
       , repoId = parseInt(req.query.id, 10);
-
-    store.getRepo(repoId, function(repo){
+    store.getRepo(repoId, function(repo, err) {
       res.render('app/repo' , {repo : repo});
     });
   },
