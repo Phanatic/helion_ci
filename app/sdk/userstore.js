@@ -48,6 +48,14 @@ var UserStore = module.exports = klass(function () {
        });
   },
 
+  registerCIJob: function(repoId, job, done) {
+    this.storeContext( function (context) {
+         context.callStoredProcedude("RegisterRepoCIJob ("+repoId+",'"+ job.name+"')", function (err, results) {
+           return done(results[0], err);
+         })
+       });
+  },
+
   registerDeployTarget: function(repoId, creds, done) {
     console.log(creds);
     this.storeContext( function (context) {

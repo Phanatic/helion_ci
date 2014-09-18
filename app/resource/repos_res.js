@@ -1,6 +1,7 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
-  , UserStore = require('../sdk/userstore');
+  , UserStore = require('../sdk/userstore')
+  , ciSystem = require('../sdk/inabox');
 
 var ReposRes = module.exports = BaseRes.extend({
   route: function (app) {
@@ -28,7 +29,17 @@ var ReposRes = module.exports = BaseRes.extend({
   signuprepo: function (req, res) {
     var store = new UserStore();
     store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url}, function(repo, err) {
-      res.render('app/reposignup' , { repo: repo});
+        var ciClient = new ciSystem();
+        var wireJob = {
+          name : repo.name,
+          description : repo.name,
+          gitrepo : repo.repoUrl
+        };
+        ciClient.addJob(wireJob, function(job) {
+            store.registerCIJob(repo.id, job, function(err, repo) {
+              res.render('app/reposignup', {repo : repo});
+            });
+        })
     });
   },
 

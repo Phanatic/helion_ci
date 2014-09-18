@@ -14,6 +14,20 @@ var InaBox = module.exports = klass(function () {
     });
   },
 
+  addJob : function (job, done) {
+    job.command = "ls";
+    var options = {
+        uri: this.getJobsUri().url,
+        rejectUnauthorized: false,
+        method: 'POST',
+        json: job
+      };
+
+    request.post(options, function(error, response, body) {
+      done(body);
+    });
+  },
+
   getUsers : function (done) {
     request.get(this.getUsersUri(), function(error, response, body) {
       var response = JSON.parse(body);

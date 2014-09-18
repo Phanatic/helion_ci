@@ -1,18 +1,30 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
-  , ciSystem = require('../sdk/inabox');
+  , ciSystem = require('../sdk/inabox')
+  , UserStore = require('../sdk/userstore');
 
 var CISystem_Res = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/jobs', this.ensureAuthenticated, this.jobs);
     app.get('/builds', this.ensureAuthenticated, this.builds);
     app.get('/job', this.ensureAuthenticated, _.bind(this.job, this));
+    app.post('/jobs', this.ensureAuthenticated, _.bind(this.addJob, this));
   },
 
   jobs: function (req, res) {
     var ciClient = new ciSystem();
     ciClient.getJobs( function(jobs) {
       res.render('app/jobs', {jobs : jobs.results});
+    })
+  },
+
+  addJob: function(req, res) {
+    var ciClient = new ciSystem();
+    ciClient.addJob(req.body, function(job) {
+      var store = new UserStore();
+      store.registerCIJob(req.repoId, job, function(err, repo) {
+        res.render('app/jobs', {jobs : jobs.results});
+      });
     })
   },
 
