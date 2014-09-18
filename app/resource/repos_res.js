@@ -27,7 +27,6 @@ var ReposRes = module.exports = BaseRes.extend({
 
   signuprepo: function (req, res) {
     var store = new UserStore();
-    debugger;
     store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url}, function(repo, err) {
       res.render('app/reposignup' , { repo: repo});
     });

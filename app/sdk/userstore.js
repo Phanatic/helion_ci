@@ -49,7 +49,6 @@ var UserStore = module.exports = klass(function () {
   },
 
   registerDeployTarget: function(repoId, creds, done) {
-    debugger;
     console.log(creds);
     this.storeContext( function (context) {
          context.callStoredProcedude("RegisterRepoDeployTarget ("+ repoId +","+

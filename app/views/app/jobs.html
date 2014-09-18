@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1>My jobs</h1>
+</div>
+<div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Description </th>
+      <th> Command </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% jobs.forEach(function(job){ %>
+    <tr>
+      <td> <a href ="<%=job.html_url%>" target="_blank"> <%=job.name%> </a> </td>
+      <td> <%=job.description%> </td>
+      <td> <%=job.command%> </td>
+    </tr>
+  <% }) %>
+</tbody>
+</div>
