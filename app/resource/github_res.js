@@ -3,6 +3,7 @@ var klass = require('klass')
   , _ = require('underscore')
   , github = require('github')
   , HelionCI = require('../sdk/helionci')
+  , ciSystem = require('../sdk/inabox')
   , UserStore = require('../sdk/userstore');
 
 var GithubRes = module.exports = klass(function () {
@@ -15,7 +16,13 @@ var GithubRes = module.exports = klass(function () {
   },
 
   recievewebhook: function(req, res) {
-    res.render('app/index');
+    var jobId = req.body.repository.name;
+    var ciClient = new ciSystem();
+    ciClient.startJob(jobId, function(job){
+      var store = new UserStore();
+      store.
+      res.json(job);
+    })
   },
 
   addwebhook: function(req, res) {
