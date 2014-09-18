@@ -30,7 +30,7 @@ var CISystem_Res = module.exports = BaseRes.extend({
   build : function(req, res){
     res.render('app/signup');
   },
-``
+  
   ensureAuthenticated : function(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
     res.redirect('/signup')
