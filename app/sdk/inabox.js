@@ -22,6 +22,22 @@ var InaBox = module.exports = klass(function () {
         method: 'POST',
         json: job
       };
+    var self = this;
+    request.post(options, function(error, response, body) {
+      debugger;
+      self.startJob(body.name, function(startError, startResponse, startBody) {
+        debugger;
+        done(body);
+      });
+    });
+  },
+
+  startJob : function (jobId, done) {
+    var options = {
+        uri: this.getJobUri(jobId).url +"start/",
+        rejectUnauthorized: false,
+        method: 'POST'
+      };
 
     request.post(options, function(error, response, body) {
       done(body);
@@ -35,8 +51,9 @@ var InaBox = module.exports = klass(function () {
     });
   },
 
-  getBuilds : function (done) {
-    request.get(this.getBuildsUri(), function(error, response, body) {
+  getBuilds : function (repoName, done) {
+    request.get(this.getBuildsUri(repoName), function(error, response, body) {
+      debugger;
       var response = JSON.parse(body);
       done(response);
     });
@@ -47,14 +64,19 @@ var InaBox = module.exports = klass(function () {
              , rejectUnauthorized: false};
   },
 
-  getBuildsUri : function () {
-    return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/builds/"
+  getBuildsUri : function (repoName) {
+    return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/jobs/"+repoName+"/builds/"
            , rejectUnauthorized: false};
 
   },
 
   getJobsUri : function () {
     return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/jobs/"
+           , rejectUnauthorized: false};
+  },
+
+  getJobUri : function (jobId) {
+    return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/jobs/"+jobId+"/"
            , rejectUnauthorized: false};
   }
 });

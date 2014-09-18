@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1> <%= repo.name%> : Builds</h1>
+</div>
+<div>
+<div class="row pull-right">
+  <div class="btn-group">
+  <button type="button" class="btn btn-primary">Start New Build</button>
+  <button type="button" class="btn btn-danger disabled">Stop Running Build</button>
+</div>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th> Result </th>
+      <th> duration </th>
+      <th> fullDisplayName </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% builds.forEach(function(build){ %>
+    <tr>
+      <td> <%=build.result%> </td>
+      <td> <%=build.duration%> </td>
+      <td> <%=build.fullDisplayName%> </td>
+    </tr>
+  <% }) %>
+</tbody>
+</div>

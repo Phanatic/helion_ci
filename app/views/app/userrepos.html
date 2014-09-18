@@ -12,6 +12,7 @@
     <tr>
       <th> Name </th>
       <th> Url </th>
+      <th> Builds </th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +20,7 @@
     <tr>
       <td> <a href ="/repo?id=<%= repo.id%>"> <%=repo.name%> </a> </td>
       <td> <%=repo.repoUrl%> </td>
-
+      <td> <a href ="/repos/builds?repoId=<%= repo.name%>"> Builds </a> </td>
     </tr>
   <% }) %>
 </tbody>
