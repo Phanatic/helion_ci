@@ -8,7 +8,7 @@ var AppRes = module.exports = BaseRes.extend({
   },
 
   all: function (req, res) {
-    res.redirect('/github/repos');
+    res.redirect('app/userrepos');
   },
 
   signup : function(req, res){

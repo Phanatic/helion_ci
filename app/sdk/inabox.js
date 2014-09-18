@@ -29,14 +29,18 @@ var InaBox = module.exports = klass(function () {
   },
 
   getUsersUri : function () {
-    return "http://Stackato:asdf@inabox.15.126.228.197.xip.io/users/";
+    return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/users/"
+             , rejectUnauthorized: false};
   },
 
   getBuildsUri : function () {
-    return "http://Stackato:asdf@inabox.15.126.228.197.xip.io/builds/";
+    return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/builds/"
+           , rejectUnauthorized: false};
+
   },
 
   getJobsUri : function () {
-    return "http://Stackato:asdf@inabox.15.126.228.197.xip.io/jobs/";
+    return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/jobs/"
+           , rejectUnauthorized: false};
   }
 });

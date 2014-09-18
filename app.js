@@ -103,7 +103,7 @@ app.get('/auth/github',
 app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/github/repos');
+    res.redirect('/repos');
   });
 
 if (!module.parent) {
