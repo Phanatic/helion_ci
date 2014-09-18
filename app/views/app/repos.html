@@ -15,7 +15,7 @@
       <td> <a href ="<%=repo.html_url%>" target="_blank"> <%=repo.name%> </a> </td>
       <td> <%=repo.description%> </td>
       <td>
-        <a class="btn btn-primary" href="/github/reposignup?repo=<%=repo.name%>&url=<%=repo.html_url%>" role="button">Sign up&raquo;</a>
+        <a class="btn btn-primary" href="/github/reposignup?repo=<%=repo.name%>&url=<%=repo.html_url%>&id=<%=repo.id%>" role="button">Sign up&raquo;</a>
       </td>
     </tr>
   <% }) %>

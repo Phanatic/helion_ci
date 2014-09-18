@@ -4,25 +4,59 @@
 <div>
 <div class="row pull-right">
   <div class="btn-group">
-  <button type="button" class="btn btn-primary">Start New Build</button>
-  <button type="button" class="btn btn-danger disabled">Stop Running Build</button>
+  <button type="button" id="btnStartBuild"
+                 data-start-text="Start New Build"
+                 data-starting-text="Starting..."
+                 data-started-text="Started."
+                 data-error-text="...Error..."
+                 class="btn btn-primary btn-sm">Start New Build</button>
+  <button type="button" class="btn btn-danger disabled btn-sm">Stop Running Build</button>
 </div>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
       <th> Result </th>
-      <th> duration </th>
-      <th> fullDisplayName </th>
+      <th> Duration </th>
+      <th> FullDisplayName </th>
     </tr>
   </thead>
   <tbody>
   <% builds.forEach(function(build){ %>
     <tr>
-      <td> <%=build.result%> </td>
+      <td>
+        <h4><% if (build.building) {%>
+          <span class="label label-info">In Progress</span>
+        <%}%>
+        <% if (build.result == 'SUCCESS') {%>
+          <span class="label label-success">Passed</span>
+        <%}%>
+        <% if (!build.building && build.result != 'SUCCESS') {%>
+          <span class="label label-danger">Failed</span>
+        <%}%></h4>
+         </td>
       <td> <%=build.duration%> </td>
       <td> <%=build.fullDisplayName%> </td>
     </tr>
   <% }) %>
 </tbody>
 </div>
+
+<script type="text/javascript">
+
+  $(function() {
+      $("#btnStartBuild").click(startBuild);
+  });
+
+  function startBuild() {
+    var $btn = $("#btnStartBuild");
+    $btn.button('starting');
+    $.post("/repos/builds", {
+      jobId : "<%=repo.name%>"
+    })
+    .done(function(build) {
+      $btn.button('started');
+    });
+  }
+
+</script>

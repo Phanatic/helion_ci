@@ -8,8 +8,9 @@ var InaBox = module.exports = klass(function () {
   // public methods
 
   getJobs : function (done) {
+    var self = this;
     request.get(this.getJobsUri(), function(error, response, body) {
-      var response = JSON.parse(body);
+      var response = self.safeParse(body);
       done(response);
     });
   },
@@ -24,9 +25,7 @@ var InaBox = module.exports = klass(function () {
       };
     var self = this;
     request.post(options, function(error, response, body) {
-      debugger;
       self.startJob(body.name, function(startError, startResponse, startBody) {
-        debugger;
         done(body);
       });
     });
@@ -45,16 +44,17 @@ var InaBox = module.exports = klass(function () {
   },
 
   getUsers : function (done) {
+    var self = this;
     request.get(this.getUsersUri(), function(error, response, body) {
-      var response = JSON.parse(body);
+      var response = self.safeParse(body);
       done(response);
     });
   },
 
   getBuilds : function (repoName, done) {
+      var self = this;
     request.get(this.getBuildsUri(repoName), function(error, response, body) {
-      debugger;
-      var response = JSON.parse(body);
+      var response = self.safeParse(body);
       done(response);
     });
   },
@@ -78,5 +78,16 @@ var InaBox = module.exports = klass(function () {
   getJobUri : function (jobId) {
     return { url : "https://Stackato:asdf@inabox.15.126.228.197.xip.io/jobs/"+jobId+"/"
            , rejectUnauthorized: false};
+  },
+
+  safeParse : function (text) {
+    var parsedObj = [];
+    try {
+      parsedObj = JSON.parse(text);
+    }
+    catch (e) {
+    }
+    return parsedObj;
   }
+
 });

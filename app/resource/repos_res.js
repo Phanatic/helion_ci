@@ -28,13 +28,13 @@ var ReposRes = module.exports = BaseRes.extend({
 
   signuprepo: function (req, res) {
     var store = new UserStore();
-    store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url}, function(repo, err) {
+    store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url, id : req.query.id}, function(repo, err) {
         var ciClient = new ciSystem();
         var wireJob = {
-          name : repo.name,
-          description : repo.name,
-          gitrepo : repo.repoUrl
-        };
+            name : repo.name,
+            description : repo.name,
+            gitrepo : repo.repoUrl
+          };
         ciClient.addJob(wireJob, function(job) {
             store.registerCIJob(repo.id, job, function(err, repo) {
               res.render('app/reposignup', {repo : repo});

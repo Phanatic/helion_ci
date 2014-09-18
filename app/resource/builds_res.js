@@ -6,6 +6,7 @@ var BaseRes = require('./base_res')
 var BuildsRes = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/repos/builds', this.ensureAuthenticated, this.all);
+    app.post('/repos/builds', this.ensureAuthenticated, this.startBuild);
     app.get('/signup', _.bind(this.signup, this));
   },
 
@@ -14,6 +15,15 @@ var BuildsRes = module.exports = BaseRes.extend({
     var ciClient = new ciSystem();
     ciClient.getBuilds(repoName, function(builds) {
         res.render('app/builds', {repo: { name : repoName } , builds: builds});
+    });
+  },
+
+  startBuild: function(req, res) {
+    var repoName = req.body.jobId;
+
+    var ciClient = new ciSystem();
+    ciClient.startJob(repoName, function(build) {
+        res.json(build);
     });
   },
 

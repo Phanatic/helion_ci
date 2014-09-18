@@ -33,8 +33,10 @@ var UserStore = module.exports = klass(function () {
   },
 
   createRepoSignup: function(user, repo, done) {
+    debugger;
     this.storeContext( function (context) {
-         context.callStoredProcedude("RegisterRepo ("+user.db.id+" , '"+ repo.name+"', '"+ repo.url+"')", function (err, results) {
+         context.callStoredProcedude("RegisterRepo ("+user.db.id+" , " + repo.id + ", '"+ repo.name+"', '"+ repo.url+"')", function (err, results) {
+
            return done(results[0], err);
          })
        });

@@ -38,11 +38,11 @@ var MySqlStore = module.exports = klass(function () {
 
   callStoredProcedude : function(procedureName, done) {
     this.connection.query(" call "+procedureName, function(err,results) {
+
         var sanitized = results;
         if(!err) {
           sanitized = results[0]
         }
-
         done(err, sanitized);
     });
   },
