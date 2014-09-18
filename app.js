@@ -10,6 +10,7 @@ var fs = require('fs')
   , GITHUB_CLIENT_SECRET = "a0e1d15b31367ff445e7c1265d6c1018de41d37e"
   , HelionCI = require('./app/sdk/helionci')
   , UserStore = require('./app/sdk/userstore');
+ 
 
 // Config
 app.set('views', __dirname + '/app/views');

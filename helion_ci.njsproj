@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{133bfdd9-f153-447a-9b8c-1e4451e13448}</ProjectGuid>
+    <ProjectHome />
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>app.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="app\views\app\build.html" />
+    <Content Include="app\views\app\builds.html" />
+    <Content Include="package.json" />
+    <Compile Include="app.js" />
+    <Compile Include="app\resource\app_res.js" />
+    <Compile Include="app\resource\base_res.js" />
+    <Compile Include="app\resource\builds_res.js" />
+    <Compile Include="app\resource\github_res.js" />
+    <Compile Include="app\resource\repos_res.js" />
+    <Compile Include="app\sdk\buildstore.js" />
+    <Compile Include="app\sdk\helionci.js" />
+    <Compile Include="app\sdk\mysqlstore.js" />
+    <Compile Include="app\sdk\userstore.js" />
+    <Content Include="app\views\layout.html" />
+    <Content Include="app\views\app\index.html" />
+    <Content Include="app\views\app\reposignup.html" />
+    <Content Include="app\views\app\repos.html" />
+    <Content Include="app\views\app\repo.html" />
+    <Content Include="app\views\app\signup.html" />
+    <Content Include="app\views\app\userrepos.html" />
+    <Content Include="app\views\app\webhooks.html" />
+    <Content Include="public\css\app.css" />
+    <Content Include="public\css\bootstrap-theme.min.css" />
+    <Content Include="public\css\bootstrap.min.css" />
+    <Compile Include="public\js\app.js" />
+    <Compile Include="public\js\bootstrap.min.js" />
+    <Compile Include="public\js\jquery.2.1.min.js" />
+    <Compile Include="tests\unit\resource\app_res_test.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app" />
+    <Folder Include="app\resource" />
+    <Folder Include="app\sdk" />
+    <Folder Include="app\views" />
+    <Folder Include="app\views\app" />
+    <Folder Include="public" />
+    <Folder Include="public\css" />
+    <Folder Include="public\js" />
+    <Folder Include="tests" />
+    <Folder Include="tests\unit" />
+    <Folder Include="tests\unit\resource" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
