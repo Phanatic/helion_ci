@@ -40,6 +40,26 @@ var UserStore = module.exports = klass(function () {
        });
   },
 
+  registerWebHook: function(repo, done) {
+    this.storeContext( function (context) {
+         context.callStoredProcedude("RegisterRepoWebHook ("+repo.id+")", function (err, results) {
+           return done(results[0], err);
+         })
+       });
+  },
+
+  registerDeployTarget: function(repoId, creds, done) {
+    debugger;
+    console.log(creds);
+    this.storeContext( function (context) {
+         context.callStoredProcedude("RegisterRepoDeployTarget ("+ repoId +","+
+         "'"+creds.server+"', '"+creds.username+"', '"+creds.password+"')",
+           function (err, results) {
+             return done(results[0], err);
+           })
+       });
+  },
+
   getReposForUser : function (user, done) {
     this.storeContext( function (context) {
       context.callStoredProcedude("GetUserRepos ("+user.db.id+")", function (err, results) {

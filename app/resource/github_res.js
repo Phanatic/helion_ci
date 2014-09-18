@@ -19,28 +19,32 @@ var GithubRes = module.exports = klass(function () {
   },
 
   addwebhook: function(req, res) {
+    var repoId = parseInt(req.body.repoId);
     this.helion().addWebHook(req.user.token, req.user.profile.username,
       req.body.repoName, function (err, hook) {
-        if(err) {
-          res.json(err);
-        }
-        else {
-          res.json(hook);
-        }
+        var store = new UserStore();
+        store.registerWebHook(repoId, function (repo, err2){
+          if(err) {
+            res.json(err);
+          }
+          else {
+              res.json(hook);
+          }
+        });
       });
   },
 
   showrepos: function (req, res) {
-      this.helion().getRepos(req.user.token, req.user.profile.username, function(error, gitRepos) {
+      this.helion().getRepos(req.user.token, req.user.profile.username,
+        function(error, gitRepos) {
           var store = new UserStore();
           store.getReposForUser(req.user, function (user, enlistedRepos){
             var repos = _.reject(gitRepos, function(gitRepo) {
               return _.any(enlistedRepos, function (repo){
-                console.log( gitRepo.html_url + " === "+ repo.repoUrl + " : "+ (gitRepo.html_url === repo.repoUrl) );
+                console.log( gitRepo.html_url + " === "+ repo.repoUrl + " : " + (gitRepo.html_url === repo.repoUrl) );
                 return gitRepo.html_url === repo.repoUrl;
               })
             });
-
             res.render('app/repos' , {repos : repos});
           });
       });

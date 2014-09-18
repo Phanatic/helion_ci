@@ -68,7 +68,7 @@
                    <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
                 </div>
                 <div class="form-group">
-                   <button type="submit" id="btnLogin" class="btn btn-primary">Login</button>
+                   <input type="button" id="btnRegisterTarget" class="btn btn-primary" value="Register" />
                 </div>
              </fieldset>
           </form>
@@ -87,4 +87,36 @@
     e.preventDefault()
     $(this).tab('show')
   })
+
+  $(function() {
+      $("#addwebhook").click(addWebHook);
+      $("#btnRegisterTarget").click(registerDeployTarget);
+  });
+
+  function addWebHook() {
+    alert('hi');
+
+    $.post("/github/addwebhook", {
+      repoName : "<%=repo.name%>",
+      repoId :  <%=repo.id%>
+    })
+    .done(function(hook, error) {
+
+    });
+  }
+
+  function registerDeployTarget () {
+    $.post("/repo/registerdeploytarget", {
+      repoId : <%=repo.id%>,
+      creds  : {
+      server : $("#inputUri").val(),
+      username :  $("#inputUserName").val(),
+      password : $("#inputPassword").val()
+      }
+    })
+    .done(function(deployTarget, error) {
+
+    });
+  }
+
 </script>
