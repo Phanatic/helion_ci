@@ -6,7 +6,7 @@ var CISystem_Res = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/jobs', this.ensureAuthenticated, this.jobs);
     app.get('/builds', this.ensureAuthenticated, this.builds);
-    app.get('/job', this.ensureAuthenticated, , _.bind(this.job, this));
+    app.get('/job', this.ensureAuthenticated, _.bind(this.job, this));
   },
 
   jobs: function (req, res) {
@@ -30,7 +30,7 @@ var CISystem_Res = module.exports = BaseRes.extend({
   build : function(req, res){
     res.render('app/signup');
   },
-  
+
   ensureAuthenticated : function(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
     res.redirect('/signup')
