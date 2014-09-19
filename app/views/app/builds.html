@@ -17,7 +17,8 @@
   <thead>
     <tr>
       <th> Result </th>
-      <th> Duration </th>
+      <th> Browse </th>
+      <th> Output </th>
       <th> FullDisplayName </th>
       <th> Commit Url </th>
       <th> Compare Url </th>
@@ -29,11 +30,6 @@
   <% builds.forEach(function(build){ %>
     <tr>
       <td>
-          <% if (build.hook && build.hook.deploytarget) {%>
-            <a href ="<%= build.hook.deploytarget%>" target="_blank"> Browse</a>
-          <%}%>
-      </td>
-      <td>
         <h4><% if (build.building) {%>
           <span class="label label-info">In Progress</span>
         <%}%>
@@ -44,7 +40,17 @@
           <span class="label label-danger">Failed</span>
         <%}%></h4>
          </td>
-      <td> <%=build.duration%> </td>
+      <td>
+          <% if (build.hook && build.hook.deploytarget) {%>
+            <a href ="<%= build.hook.deploytarget%>" target="_blank"> Browse</a>
+          <%}%>
+      </td>
+      <td>
+        <% if (build.hook) {%>
+          <a href ="/builds/console?jobName=<%= build.hook.name%>&build=<%=build.number%>">
+            Output</a>
+        <%}%>
+      </td>
       <td> <%=build.fullDisplayName%> </td>
       <td>
         <% if (build.hook) {%>

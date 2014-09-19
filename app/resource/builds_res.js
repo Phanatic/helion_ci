@@ -22,8 +22,10 @@ var BuildsRes = module.exports = BaseRes.extend({
           var combinedBuilds = [];
           _.each(builds, function(build){
             var hookForBuild = _.find(webhooks, function(hook) { return hook.buildNumber === build.number ;});
-            build.hook = hookForBuild;
-            combinedBuilds.push(build);
+            if(hookForBuild) {
+              build.hook = hookForBuild;
+              combinedBuilds.push(build);
+            }
           });
 
           res.render('app/builds', {repo: { name : repoName } , builds: combinedBuilds});

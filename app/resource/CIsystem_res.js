@@ -7,6 +7,7 @@ var CISystem_Res = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/jobs', this.ensureAuthenticated, this.jobs);
     app.get('/builds', this.ensureAuthenticated, this.builds);
+    app.get('/builds/console', this.ensureAuthenticated, this.getOutputText);
     app.get('/job', this.ensureAuthenticated, _.bind(this.job, this));
     app.post('/jobs', this.ensureAuthenticated, _.bind(this.addJob, this));
   },
@@ -26,6 +27,18 @@ var CISystem_Res = module.exports = BaseRes.extend({
         res.render('app/jobs', {jobs : jobs.results});
       });
     })
+  },
+
+  getOutputText : function (req, res) {
+    var jobName = req.query.jobName,
+    buildNumber = parseInt(req.query.build);
+
+    var ciClient = new ciSystem();
+    ciClient.getConsoleText(jobName, buildNumber, function(consoleText) {
+        res.render('app/buildoutput', {consoleText:consoleText,
+           jobName : jobName,
+           buildNumber : buildNumber});
+    });
   },
 
   builds: function (req, res) {
