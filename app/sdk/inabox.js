@@ -37,9 +37,10 @@ var InaBox = module.exports = klass(function () {
         rejectUnauthorized: false,
         method: 'POST'
       };
-
+    var self = this;
     request.post(options, function(error, response, body) {
-      done(body);
+      var response = self.safeParse(body);
+      done(response);
     });
   },
 

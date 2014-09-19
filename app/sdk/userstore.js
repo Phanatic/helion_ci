@@ -33,7 +33,7 @@ var UserStore = module.exports = klass(function () {
   },
 
   createRepoSignup: function(user, repo, done) {
-    debugger;
+
     this.storeContext( function (context) {
          context.callStoredProcedude("RegisterRepo ("+user.db.id+" , " + repo.id + ", '"+ repo.name+"', '"+ repo.url+"')", function (err, results) {
 
@@ -47,6 +47,20 @@ var UserStore = module.exports = klass(function () {
          context.callStoredProcedude("RegisterRepoWebHook ("+repo.id+")", function (err, results) {
            return done(results[0], err);
          })
+       });
+  },
+
+  registerWebHookCall: function(webHook, build, done) {
+
+    this.storeContext( function (context) {
+         context.callStoredProcedude("RegisterWebHookCall ("+webHook.repository.id+
+            ", '"+webHook.head_commit.url+"'" +
+            ", '"+webHook.compare+"'" +
+            ", '"+webHook.head_commit.committer.name+
+            "', "+build.build_number+")",
+             function (err, results) {
+               return done(results[0], err);
+             })
        });
   },
 

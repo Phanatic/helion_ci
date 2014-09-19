@@ -18,10 +18,12 @@ var GithubRes = module.exports = klass(function () {
   recievewebhook: function(req, res) {
     var jobId = req.body.repository.name;
     var ciClient = new ciSystem();
-    ciClient.startJob(jobId, function(job){
+    ciClient.startJob(jobId, function(build){
       var store = new UserStore();
-      store.
-      res.json(job);
+      debugger;
+      store.registerWebHookCall(req.body, build, function (loggedCall) {
+        res.json(loggedCall);
+      })
     })
   },
 
