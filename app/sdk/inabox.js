@@ -16,7 +16,12 @@ var InaBox = module.exports = klass(function () {
   },
 
   addJob : function (job, done) {
-    job.command = "ls";
+    job.command = "set -x \r\n "+
+      "PATH=${PATH}:~/bin \r\n "+
+      "DOMAIN=15.126.228.197.xip.io \r\n"+
+      "stackato target https://api.${DOMAIN} \r\n"+
+      "stackato login terryhowe --password mypassword \r\n"+
+      "stackato push -n";
     var options = {
         uri: this.getJobsUri().url,
         rejectUnauthorized: false,
@@ -39,6 +44,7 @@ var InaBox = module.exports = klass(function () {
       };
     var self = this;
     request.post(options, function(error, response, body) {
+      debugger;
       var response = self.safeParse(body);
       done(response);
     });

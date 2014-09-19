@@ -51,7 +51,7 @@ var UserStore = module.exports = klass(function () {
   },
 
   registerWebHookCall: function(webHook, build, done) {
-
+    debugger;
     this.storeContext( function (context) {
          context.callStoredProcedude("RegisterWebHookCall ("+webHook.repository.id+
             ", '"+webHook.head_commit.url+"'" +
