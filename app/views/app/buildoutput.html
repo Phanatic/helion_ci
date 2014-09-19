@@ -1,6 +1,19 @@
 <div class="page-header">
   <h1> <%= jobName%> : Build # <%=buildNumber%> Output</h1>
 </div>
-<pre>
+<pre id="consoleText">
 <%=consoleText%>
 </pre>
+
+<script type="text/javascript">
+  $(function() {
+      setInterval(updateBuildStatus, 5000);
+  });
+
+  function updateBuildStatus() {
+    $.get("/builds/console/json?jobName=<%=jobName%>&build=<%=buildNumber%>")
+    .done(function(result) {
+      $("#consoleText").html(result.consoleText);
+    });
+  }
+</script>
