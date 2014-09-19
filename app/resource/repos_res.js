@@ -6,6 +6,7 @@ var BaseRes = require('./base_res')
 var ReposRes = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/repos', this.ensureAuthenticated, _.bind(this.all, this));
+    app.get('/repos/webhooks', this.ensureAuthenticated, _.bind(this.getWebHooks, this));
     app.get('/repo', this.ensureAuthenticated, _.bind(this.getRepo, this));
     app.post('/repo/registerdeploytarget', this.ensureAuthenticated, _.bind(this.registerdeploytarget, this));
     app.get('/github/reposignup', this.ensureAuthenticated, _.bind(this.signuprepo, this));
@@ -24,6 +25,15 @@ var ReposRes = module.exports = BaseRes.extend({
     store.getRepo(repoId, function(repo, err) {
       res.render('app/reposignup' , {repo : repo});
     });
+  },
+
+  getWebHooks : function (req, res) {
+    var store = new UserStore()
+      , repoId = parseInt(req.query.repoId, 10);
+      store.getWebHookCalls(repoId, function(webhooks, err) {
+        debugger;
+        res.render('app/webhooks' , {webhooks : webhooks});
+      });
   },
 
   signuprepo: function (req, res) {

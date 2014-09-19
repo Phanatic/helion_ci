@@ -99,6 +99,14 @@ var UserStore = module.exports = klass(function () {
        });
   },
 
+  getWebHookCalls : function(repoId, done) {
+    this.storeContext( function (context) {
+         context.callStoredProcedude("GetWebHookCallsForRepo ("+repoId+")", function (err, results) {
+           return done(results, err);
+         })
+       });
+  },
+
   storeContext: function(done) {
     var sqlStore = new mySqlStore();
     sqlStore.connectToStore(function(err,connection){

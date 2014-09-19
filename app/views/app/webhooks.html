@@ -1,28 +1,28 @@
 <div class="page-header">
-  <h1>My Repos</h1>
+  <h1>My webhooks</h1>
+  <div class="pull-right">
+    <a href="/github/webhooks" class="btn btn-success">Add a webhook</a>
+  </div>
 </div>
-<div class="col-md-6">
+
+
+<div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th> Triggered </th>
-      <th> Author </th>
-      <th> Commit </th>
-      <th> Builds </th>
+      <th> Commit Url </th>
+      <th> Compare Url </th>
+      <th> Committer </th>
+      <th> Build </th>
     </tr>
   </thead>
   <tbody>
-  <% repos.forEach(function(repo){ %>
+  <% webhooks.forEach(function(webhook){ %>
     <tr>
-      <td> <%=repo.name%> </td>
-      <td> <%=repo.description%> </td>
-      <td> <%if (repo.lastbuildfailed) {%>
-            <span class="label label-danger">Failed</span>
-           <%} else {%>
-             <span class="label label-success">Succeeded</span>
-           <%}%>
-           </td>
-      <td> <a href="/repos/builds?repoId=<%=repo.id%>"><span class="badge pull-right"><%=repo.builds.length%></span>View Builds</a></td>
+      <td> <a href ="<%= webhook.commitUrl%>"> View Commit</a> </td>
+      <td> <a href ="<%= webhook.compareUrl%>"> Compare </a> </td>
+      <td> <%= webhook.commiter%> </td>
+      <td> <%= webhook.buildNumber%> </td>
     </tr>
   <% }) %>
 </tbody>
