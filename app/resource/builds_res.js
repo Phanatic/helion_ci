@@ -6,7 +6,7 @@ var ReposRes = module.exports = BaseRes.extend({
     route: function (app) {
               
         app.get('/repos/builds', _.bind(this.all, this));
-        app.get('/build', _.bind(this.getBuild, this));
+        app.get('/repos/builds/:jobid', _.bind(this.getBuild, this));
     },
     
     all: function (req, res) {
@@ -20,7 +20,7 @@ var ReposRes = module.exports = BaseRes.extend({
     
     getBuild : function (req, res) {
         var store = new BuildStore()
-      , buildId = parseInt(req.query.id, 10);
+      , buildId = req.query.jobId;
         
         store.getBuildsForUser(buildId, function (build) {
             debugger;
