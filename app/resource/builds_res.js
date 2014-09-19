@@ -24,7 +24,7 @@ var BuildsRes = module.exports = BaseRes.extend({
             build.hook = hookForBuild;
             combinedBuilds.push(build);
           });
-          debugger;
+          
           res.render('app/builds', {repo: { name : repoName } , builds: combinedBuilds});
         });
     });
@@ -50,7 +50,7 @@ var BuildsRes = module.exports = BaseRes.extend({
       combinedBuilds.push( _.extend(build, hookForBuild));
     });
 
-    debugger;
+    
     return combinedBuilds;
   },
 

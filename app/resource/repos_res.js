@@ -1,7 +1,8 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
   , UserStore = require('../sdk/userstore')
-  , ciSystem = require('../sdk/inabox');
+  , ciSystem = require('../sdk/inabox')
+  , HelionCI = require('../sdk/helionci');
 
 var ReposRes = module.exports = BaseRes.extend({
   route: function (app) {
@@ -17,7 +18,7 @@ var ReposRes = module.exports = BaseRes.extend({
     store.getReposForUser(req.user, function(user, repos){
       var ciClient = new ciSystem();
       ciClient.getJobs(function(jobs) {
-        debugger;
+
         var combinedRepos = [];
         _.each(repos, function(repo){
           var jobForRepo = _.find(jobs.results, function(job) { return job.name === repo.name ;});
@@ -42,25 +43,37 @@ var ReposRes = module.exports = BaseRes.extend({
     var store = new UserStore()
       , repoId = parseInt(req.query.repoId, 10);
       store.getWebHookCalls(repoId, function(webhooks, err) {
-        debugger;
+
         res.render('app/webhooks' , {webhooks : webhooks});
       });
   },
 
   signuprepo: function (req, res) {
-    var store = new UserStore();
-    store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url, id : req.query.id}, function(repo, err) {
+    var store = new UserStore(),
+    self = this;
+    store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url, id : req.query.id},
+      function(repo, err) {
+        console.log('created repo signup');
         var ciClient = new ciSystem();
         var wireJob = {
             name : repo.name,
             description : repo.name,
             gitrepo : repo.repoUrl
           };
+
         ciClient.addJob(wireJob, function(job) {
-            store.registerCIJob(repo.id, job, function(err, repo) {
-              res.render('app/reposignup', {repo : repo});
+            console.log('added job to inabox server');
+            store.registerCIJob(repo.id, job, function(storeRepo) {
+
+              var helion = new HelionCI();
+              helion.addWebHook(req.user.token, req.user.profile.username,
+                  storeRepo.name, function (err, hook) {
+                    console.log('added webhook to github');
+                    res.redirect('/repos');
+                });
+
             });
-        })
+        });
     });
   },
 
@@ -75,5 +88,10 @@ var ReposRes = module.exports = BaseRes.extend({
     if (req.isAuthenticated()) { return next();
     }
     res.redirect('/signup')
+  },
+
+  helion : function () {
+    var helion = new HelionCI();
+    return helion;
   }
 });

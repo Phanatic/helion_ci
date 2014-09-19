@@ -20,7 +20,7 @@ var GithubRes = module.exports = klass(function () {
     var ciClient = new ciSystem();
     ciClient.startJob(jobId, function(build){
       var store = new UserStore();
-      debugger;
+
       store.registerWebHookCall(req.body, build, function (loggedCall) {
         res.json(loggedCall);
       })
@@ -50,7 +50,6 @@ var GithubRes = module.exports = klass(function () {
           store.getReposForUser(req.user, function (user, enlistedRepos){
             var repos = _.reject(gitRepos, function(gitRepo) {
               return _.any(enlistedRepos, function (repo){
-                console.log( gitRepo.html_url + " === "+ repo.repoUrl + " : " + (gitRepo.html_url === repo.repoUrl) );
                 return gitRepo.html_url === repo.repoUrl;
               })
             });

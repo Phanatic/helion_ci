@@ -1,5 +1,5 @@
 var klass = require('klass')
-  , payloadURL = "http://localhost:3000/github/webhook/"
+  , payloadURL = "https://7585af57.ngrok.com/github/webhook"
   , github = require('github');
 
 var Helion = module.exports = klass(function () {
