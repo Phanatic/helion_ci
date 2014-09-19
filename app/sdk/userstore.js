@@ -62,7 +62,8 @@ var UserStore = module.exports = klass(function () {
             ", '"+webHook.compare+"'" +
             ", '"+webHook.head_commit.committer.name+"'"+
             ", '"+webHook.head_commit.message+"'"+
-            ", "+build.build_number+")",
+            ", "+build.build_number
+            +", 'https://"+webHook.repository.name +build.build_number +".15.126.228.197.xip.io')",
              function (err, results) {
                return done(results[0], err);
              })

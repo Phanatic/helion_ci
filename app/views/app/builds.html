@@ -41,8 +41,8 @@
         <%}%></h4>
          </td>
       <td>
-          <% if (build.hook && build.hook.deploytarget) {%>
-            <a href ="<%= build.hook.deploytarget%>" target="_blank"> Browse</a>
+          <% if (build.hook && build.hook.deployUrl) {%>
+            <a href ="<%= build.hook.deployUrl%>" target="_blank"> Browse</a>
           <%}%>
       </td>
       <td>
