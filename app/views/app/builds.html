@@ -30,16 +30,18 @@
   <% builds.forEach(function(build){ %>
     <tr>
       <td>
-        <h4><% if (build.building) {%>
-          <span class="label label-info">In Progress</span>
-        <%}%>
-        <% if (build.result == 'SUCCESS') {%>
-          <span class="label label-success">Passed</span>
-        <%}%>
-        <% if (!build.building && build.result != 'SUCCESS') {%>
-          <span class="label label-danger">Failed</span>
-        <%}%></h4>
-         </td>
+        <h4 id="build<%=build.number%>">
+          <% if (build.building) {%>
+              <span class="label label-info">In Progress</span>
+          <%}%>
+          <% if (build.result == 'SUCCESS') {%>
+              <span class="label label-success">Passed</span>
+          <%}%>
+          <% if (!build.building && build.result != 'SUCCESS') {%>
+              <span class="label label-danger">Failed</span>
+          <%}%>
+        </h4>
+      </td>
       <td>
           <% if (build.hook && build.hook.deployUrl) {%>
             <a href ="<%= build.hook.deployUrl%>" target="_blank"> Browse</a>
@@ -82,6 +84,7 @@
 
   $(function() {
       $("#btnStartBuild").click(startBuild);
+      setInterval(updateBuildStatus, 5000);
   });
 
   function startBuild() {
@@ -93,6 +96,29 @@
     .done(function(build) {
       $btn.button('started');
     });
+  }
+
+  function updateBuildStatus() {
+    $.get("/repos/builds/status?repoName=<%=repo.name%>")
+    .done(function(buildStatuses) {
+      console.log(buildStatuses);
+      $.each(buildStatuses, function(index, buildStatus){
+        var buildUI = $("#build"+buildStatus.number);
+        updateStatusUI(buildUI, buildStatus);
+      });
+    });
+  }
+
+  function updateStatusUI(buildUI, buildStatus) {
+    if(buildStatus.building) {
+      buildUI.html("<span class='label label-info'>In Progress</span>");
+    }
+    else if(buildStatus.result === "SUCCESS") {
+      buildUI.html("<span class='label label-success'>Succeeded</span>");
+    }
+    else {
+      buildUI.html("<span class='label label-danger'>Failed</span>");
+    }
   }
 
 </script>

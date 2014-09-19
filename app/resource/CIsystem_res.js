@@ -7,7 +7,8 @@ var CISystem_Res = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/jobs', this.ensureAuthenticated, this.jobs);
     app.get('/builds', this.ensureAuthenticated, this.builds);
-    app.get('/builds/console', this.ensureAuthenticated, this.getOutputText);
+    app.get('/builds/console', this.ensureAuthenticated,  _.bind(this.getOutputText, this));
+    app.get('/builds/console/json', this.ensureAuthenticated,  _.bind(this.getOutputTextJSON, this));
     app.get('/job', this.ensureAuthenticated, _.bind(this.job, this));
     app.post('/jobs', this.ensureAuthenticated, _.bind(this.addJob, this));
   },
@@ -33,9 +34,24 @@ var CISystem_Res = module.exports = BaseRes.extend({
     var jobName = req.query.jobName,
     buildNumber = parseInt(req.query.build);
 
+    this.getOutputTextFromSDK(jobName, buildNumber, function(result) {
+      res.render('app/buildoutput', result);
+    });
+  },
+
+  getOutputTextJSON : function(req, res) {
+    var jobName = req.query.jobName,
+    buildNumber = parseInt(req.query.build);
+
+    this.getOutputTextFromSDK(jobName, buildNumber, function(result) {
+      res.json(result);
+    });
+  },
+
+  getOutputTextFromSDK : function(jobName, buildNumber, done) {
     var ciClient = new ciSystem();
     ciClient.getConsoleText(jobName, buildNumber, function(consoleText) {
-        res.render('app/buildoutput', {consoleText:consoleText,
+        done({consoleText:consoleText,
            jobName : jobName,
            buildNumber : buildNumber});
     });

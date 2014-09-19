@@ -61,6 +61,7 @@ var InaBox = module.exports = klass(function () {
   getBuilds : function (repoName, done) {
       var self = this;
     request.get(this.getBuildsUri(repoName), function(error, response, body) {
+      debugger;
       var results = self.safeParse(body);
       done(results);
     });

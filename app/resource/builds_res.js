@@ -7,6 +7,7 @@ var BuildsRes = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/repos/builds', this.ensureAuthenticated, this.all);
     app.post('/repos/builds', this.ensureAuthenticated, this.startBuild);
+    app.get('/repos/builds/status', this.ensureAuthenticated, this.getBuildStatus);
     app.get('/signup', _.bind(this.signup, this));
   },
 
@@ -30,6 +31,17 @@ var BuildsRes = module.exports = BaseRes.extend({
 
           res.render('app/builds', {repo: { name : repoName } , builds: combinedBuilds});
         });
+    });
+  },
+
+  getBuildStatus : function (req, res) {
+    var repoName = req.query.repoName
+    , ciClient = new ciSystem();
+
+    debugger;
+    ciClient.getBuilds(repoName, function(builds) {
+      debugger;
+      res.json(builds);
     });
   },
 
