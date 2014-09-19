@@ -21,7 +21,11 @@
     <tr>
       <td> <a href ="/repo?id=<%= repo.id%>"> <%=repo.name%> </a> </td>
       <td> <%=repo.repoUrl%> </td>
-      <td> <a href ="/repos/builds?repoId=<%= repo.name%>"> Builds </a> </td>
+      <td> <a href ="/repos/builds?repoName=<%= repo.name%>&id=<%=repo.githubrepoid%>">Builds</a>
+        <% if (repo.job) { %>
+          <span class="badge"><%=repo.job.build_number%></span>
+        <% } %>
+       </td>
       <td> <a href ="/repos/webhooks?repoId=<%= repo.githubrepoid%>"> Webhooks </a> </td>
     </tr>
   <% }) %>

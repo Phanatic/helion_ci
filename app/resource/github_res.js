@@ -11,7 +11,7 @@ var GithubRes = module.exports = klass(function () {
 }).methods({
   route: function (app) {
     app.post('/github/addwebhook', this.ensureAuthenticated, _.bind(this.addwebhook, this));
-    app.post('/github/webhook', this.ensureAuthenticated, _.bind(this.recievewebhook, this));
+    app.post('/github/webhook', _.bind(this.recievewebhook, this));
     app.get('/github/repos', this.ensureAuthenticated, _.bind(this.showrepos, this));
   },
 

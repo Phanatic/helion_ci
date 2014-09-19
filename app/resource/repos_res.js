@@ -15,7 +15,18 @@ var ReposRes = module.exports = BaseRes.extend({
   all: function (req, res) {
     var store = new UserStore();
     store.getReposForUser(req.user, function(user, repos){
-      res.render('app/userrepos' , {repos : repos});
+      var ciClient = new ciSystem();
+      ciClient.getJobs(function(jobs) {
+        debugger;
+        var combinedRepos = [];
+        _.each(repos, function(repo){
+          var jobForRepo = _.find(jobs.results, function(job) { return job.name === repo.name ;});
+          repo.job = jobForRepo;
+          combinedRepos.push(repo);
+        });
+
+        res.render('app/userrepos' , {repos : combinedRepos});
+      })
     });
   },
 

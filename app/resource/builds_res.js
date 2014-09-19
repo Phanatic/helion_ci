@@ -11,10 +11,22 @@ var BuildsRes = module.exports = BaseRes.extend({
   },
 
   all: function (req, res) {
-    var repoName = req.query.repoId;
-    var ciClient = new ciSystem();
+    var repoName = req.query.repoName
+      , repoId = parseInt(req.query.id)
+      , ciClient = new ciSystem()
+      , self = this;
     ciClient.getBuilds(repoName, function(builds) {
-        res.render('app/builds', {repo: { name : repoName } , builds: builds});
+        var store = new UserStore();
+        store.getWebHookCalls(repoId, function(webhooks, err) {
+          var combinedBuilds = [];
+          _.each(builds, function(build){
+            var hookForBuild = _.find(webhooks, function(hook) { return hook.buildNumber === build.number ;});
+            build.hook = hookForBuild;
+            combinedBuilds.push(build);
+          });
+          debugger;
+          res.render('app/builds', {repo: { name : repoName } , builds: combinedBuilds});
+        });
     });
   },
 
@@ -29,6 +41,17 @@ var BuildsRes = module.exports = BaseRes.extend({
 
   signup : function(req, res){
     res.render('app/signup');
+  },
+
+  combineBuildMetadata : function (builds, webhooks) {
+    var combinedBuilds = [];
+    _.each(builds, function(build){
+      var hookForBuild = _.find(webhooks, function(hook) { return hook.buildNumber === build.number ;});
+      combinedBuilds.push( _.extend(build, hookForBuild));
+    });
+
+    debugger;
+    return combinedBuilds;
   },
 
   ensureAuthenticated : function(req, res, next) {

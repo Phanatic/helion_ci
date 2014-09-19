@@ -19,6 +19,10 @@
       <th> Result </th>
       <th> Duration </th>
       <th> FullDisplayName </th>
+      <th> Commit Url </th>
+      <th> Compare Url </th>
+      <th> Comments </th>
+      <th> Committer </th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +41,26 @@
          </td>
       <td> <%=build.duration%> </td>
       <td> <%=build.fullDisplayName%> </td>
+      <td>
+        <% if (build.hook) {%>
+          <a href ="<%= build.hook.commitUrl%>" target="_blank"> View Commit</a>
+        <%}%>
+      </td>
+      <td>
+        <% if (build.hook) {%>
+          <a href ="<%= build.hook.compareUrl%>" target="_blank">Compare</a>
+        <%}%>
+      </td>
+      <td>
+        <% if (build.hook) {%>
+          <%= build.hook.message%>
+        <%}%>
+      </td>
+      <td>
+        <% if (build.hook) {%>
+          <%= build.hook.commiter%>
+        <%}%>
+      </td>
     </tr>
   <% }) %>
 </tbody>

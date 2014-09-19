@@ -56,8 +56,9 @@ var UserStore = module.exports = klass(function () {
          context.callStoredProcedude("RegisterWebHookCall ("+webHook.repository.id+
             ", '"+webHook.head_commit.url+"'" +
             ", '"+webHook.compare+"'" +
-            ", '"+webHook.head_commit.committer.name+
-            "', "+build.build_number+")",
+            ", '"+webHook.head_commit.committer.name+"'"+
+            ", '"+webHook.head_commit.message+"'"+
+            ", "+build.build_number+")",
              function (err, results) {
                return done(results[0], err);
              })
