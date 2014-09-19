@@ -51,7 +51,10 @@ var ReposRes = module.exports = BaseRes.extend({
   signuprepo: function (req, res) {
     var store = new UserStore(),
     self = this;
-    store.createRepoSignup(req.user, { name : req.query.repo, url : req.query.url, id : req.query.id},
+    store.createRepoSignup(req.user, { name : req.query.repo
+      , url : req.query.url
+      , id : req.query.id
+      , deployTarget : "https://" + req.query.repo + ".15.126.228.197.xip.io" },
       function(repo, err) {
         console.log('created repo signup');
         var ciClient = new ciSystem();

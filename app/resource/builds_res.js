@@ -18,13 +18,14 @@ var BuildsRes = module.exports = BaseRes.extend({
     ciClient.getBuilds(repoName, function(builds) {
         var store = new UserStore();
         store.getWebHookCalls(repoId, function(webhooks, err) {
+          debugger;
           var combinedBuilds = [];
           _.each(builds, function(build){
             var hookForBuild = _.find(webhooks, function(hook) { return hook.buildNumber === build.number ;});
             build.hook = hookForBuild;
             combinedBuilds.push(build);
           });
-          
+
           res.render('app/builds', {repo: { name : repoName } , builds: combinedBuilds});
         });
     });
@@ -50,7 +51,7 @@ var BuildsRes = module.exports = BaseRes.extend({
       combinedBuilds.push( _.extend(build, hookForBuild));
     });
 
-    
+
     return combinedBuilds;
   },
 

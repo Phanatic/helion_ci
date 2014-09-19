@@ -29,6 +29,11 @@
   <% builds.forEach(function(build){ %>
     <tr>
       <td>
+          <% if (build.hook && build.hook.deploytarget) {%>
+            <a href ="<%= build.hook.deploytarget%>" target="_blank"> Browse</a>
+          <%}%>
+      </td>
+      <td>
         <h4><% if (build.building) {%>
           <span class="label label-info">In Progress</span>
         <%}%>
@@ -61,6 +66,7 @@
           <%= build.hook.commiter%>
         <%}%>
       </td>
+
     </tr>
   <% }) %>
 </tbody>

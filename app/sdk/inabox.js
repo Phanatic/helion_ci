@@ -21,7 +21,7 @@ var InaBox = module.exports = klass(function () {
       "DOMAIN=15.126.228.197.xip.io \r\n"+
       "stackato target https://api.${DOMAIN} \r\n"+
       "stackato login terryhowe --password mypassword \r\n"+
-      "stackato push -n";
+      "stackato push -n --as "+job.name +" --reset";
     var options = {
         uri: this.getJobsUri().url,
         rejectUnauthorized: false,
